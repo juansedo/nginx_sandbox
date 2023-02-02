@@ -2,7 +2,7 @@
 
 # Nginx Sandbox
 
-This is a sandbox for testing nginx configurations. Includes some basic NodeJS apps to test with.
+This is a sandbox for testing nginx configurations. It includes some basic NodeJS apps to test with.
 
 ## Usage
 
@@ -17,4 +17,5 @@ docker-compose up -d
 🛠️ **Soon**
 
 ## Authors
+
 - [**@juansedo**](https://www.github.com/juansedo) - Juan Sebastián Díaz

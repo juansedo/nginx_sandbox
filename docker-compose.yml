@@ -12,3 +12,27 @@ services:
       - ./nginx/nginx_conf/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/nginx_conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/web:/usr/share/nginx/html
+    networks:
+      - nginx_sandbox
+
+  app1:
+    restart: unless-stopped
+    build: app1
+    container_name: app1
+    environment:
+      PORT: 3000
+    networks:
+      - nginx_sandbox
+
+  app2:
+    restart: unless-stopped
+    build: app1
+    container_name: app2
+    environment:
+      PORT: 4000
+    networks:
+      - nginx_sandbox
+
+networks:
+  nginx_sandbox:
+    driver: bridge

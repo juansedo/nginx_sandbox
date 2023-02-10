@@ -11,9 +11,12 @@ services:
     volumes:
       - ./nginx/nginx_conf/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/nginx_conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx_conf/modules:/etc/nginx/modules
+      - ./nginx/certs:/etc/nginx/ssl
       - ./nginx/web:/usr/share/nginx/html
     networks:
-      - nginx_sandbox
+      nginx_sandbox:
+        ipv4_address: 10.5.0.2
 
   app1:
     restart: unless-stopped
@@ -22,7 +25,8 @@ services:
     environment:
       PORT: 3000
     networks:
-      - nginx_sandbox
+      nginx_sandbox:
+        ipv4_address: 10.5.0.10
 
   app2:
     restart: unless-stopped
@@ -31,8 +35,15 @@ services:
     environment:
       PORT: 4000
     networks:
-      - nginx_sandbox
+      nginx_sandbox:
+        ipv4_address: 10.5.0.11
 
 networks:
   nginx_sandbox:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: 'false'
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
